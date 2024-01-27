@@ -51,8 +51,8 @@ Any value returned is ignored.
 PS.init = function( system, options ) {
 	// Uncomment the following code line 
 	// to verify operation:
-
-	PS.debug( "PS.init() called\n" );
+	//PS.DebugClose();
+	//PS.debug( "PS.init() called\n" );
 	
 	// This function should normally begin
 	// with a call to PS.gridSize( x, y )
@@ -64,9 +64,9 @@ PS.init = function( system, options ) {
 	// Uncomment the following code line and change
 	// the x and y parameters as needed.
 
-	PS.gridSize( 32, 32);
+	PS.gridSize( 32, 33);
 
-	PS.statusText("Welcome! Press a key 1-5, then a key 6-0.");
+	PS.statusText("Welcome to ArPix!");
 	//PS.statusText("Now press A,B,C,D, or E to choose brightness.");
 
 	// This is also a good place to display
@@ -94,6 +94,39 @@ PS.init = function( system, options ) {
 	PS.colVal = 1;
 	PS.brightVal = 3;
 
+	//,,,,,,,,,,,,,,,,,
+	PS.color(0,31,0xFFFFFF);
+	PS.color(1,31,0xff7d7d);
+	PS.color(2,31,0xe60000);
+	PS.color(3,31,0x7a0202);
+	PS.color(4,31,0xffdda6);
+	PS.color(5,31,0xfa9e0a);
+	PS.color(6,31,0x855200);
+	PS.color(7,31,0xfcefa2);
+	PS.color(8,31,0xffdc17);
+	PS.color(9,31,0xccb806);
+	PS.color(10,31,0x98fa7f);
+	PS.color(11,31,0x2bcf02);
+	PS.color(12,31,0x1c8501);
+	PS.color(13,31,0x95b4fc);
+	PS.color(14,31,0x0549e8);
+	PS.color(15,31,0x014c85);
+	PS.color(16,31,0xc795fc);
+	PS.color(17,31,0x7907f2);
+	PS.color(18,31,0x4d009e);
+	PS.color(19,31,0x000000);
+	PS.color(20,31,0x000000);
+	PS.color(21,31,0x000000);
+	PS.color(22,31,0x000000);
+	PS.color(23,31,0x000000);
+	PS.color(24,31,0x000000);
+	PS.color(25,31,0x000000);
+	PS.color(26,31,0x000000);
+	PS.color(27,31,0x000000);
+	PS.color(28,31,0x000000);
+	PS.color(29,31,0x000000);
+	PS.color(30,31,0x000000);
+	PS.color(31,31,0x000000);
 };
 
 /*
@@ -107,15 +140,32 @@ This function doesn't have to do anything. Any value returned is ignored.
 */
 
 PS.touch = function( x, y, data, options ) {
-	// Uncomment the following code line
-	// to inspect x/y parameters:
-
-	PS.debug( "PS.touch() @ " + x + ", " + y + "\n" );
-
-	// Add code here for mouse clicks/touches
-	// over a bead.
-	PS.color( x, y, PS.CURRCOLOR );
-    //PS.AudioPlay("fx_click");
+	if (y < 31) { //Paints em
+		PS.color( x, y, PS.CURRCOLOR );
+	} else { //Selects Paint Color
+		switch (x) {
+			default: PS.setColor(1,1); break; //BLACK
+			case 0: PS.setColor(1,5); break; //White
+			case 1: PS.setColor(1,4); break; //Pink
+			case 2: PS.setColor(1,3); break; //Red
+			case 3: PS.setColor(1,2); break; //Crimson
+			case 4: PS.setColor(2,4); break; //Peach
+			case 5: PS.setColor(2,3); break; //Orange
+			case 6: PS.setColor(2,2); break; //Brown
+			case 7: PS.setColor(3,4); break; //L Yellow
+			case 8: PS.setColor(3,3); break; //Yellow
+			case 9: PS.setColor(3,2); break; //D Yellow
+			case 10: PS.setColor(4,4); break; //L Green
+			case 11: PS.setColor(4,3); break; //Green
+			case 12: PS.setColor(4,2); break; //D Green
+			case 13: PS.setColor(5,4); break; //L Blue
+			case 14: PS.setColor(5,3); break; //Blue
+			case 15: PS.setColor(5,2); break; //D Blue
+			case 16: PS.setColor(6,4); break; //L Purple
+			case 17: PS.setColor(6,3); break; //Purple
+			case 18: PS.setColor(6,2); break; //D Purple
+		}
+	}
 
 	PS.penDown = true;
 };
@@ -151,13 +201,7 @@ This function doesn't have to do anything. Any value returned is ignored.
 */
 
 PS.enter = function( x, y, data, options ) {
-	// Uncomment the following code line to inspect x/y parameters:
-
-	// PS.debug( "PS.enter() @ " + x + ", " + y + "\n" );
-
-	// Add code here for when the mouse cursor/touch enters a bead.
-
-	if (PS.penDown == true) {
+	if ((PS.penDown == true) && (y < 31)) {
 		PS.color(x, y, PS.CURRCOLOR);
 	}
 };
@@ -173,11 +217,7 @@ This function doesn't have to do anything. Any value returned is ignored.
 */
 
 PS.exit = function( x, y, data, options ) {
-	// Uncomment the following code line to inspect x/y parameters:
 
-	// PS.debug( "PS.exit() @ " + x + ", " + y + "\n" );
-
-	// Add code here for when the mouse cursor/touch exits a bead.
 };
 
 /*
@@ -188,11 +228,7 @@ This function doesn't have to do anything. Any value returned is ignored.
 */
 
 PS.exitGrid = function( options ) {
-	// Uncomment the following code line to verify operation:
 
-	// PS.debug( "PS.exitGrid() called\n" );
-
-	// Add code here for when the mouse cursor/touch moves off the grid.
 };
 
 /*
@@ -206,208 +242,7 @@ This function doesn't have to do anything. Any value returned is ignored.
 */
 
 PS.keyDown = function( key, shift, ctrl, options ) {
-	// Uncomment the following code line to inspect first three parameters:
-	PS.debug(key);
 
-	// PS.debug( "PS.keyDown(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
-	switch (key) {
-		
-		case 48:
-			PS.brightVal = 5; //Black
-		break;	
-		
-		//Sets color value
-		case 49:
-			PS.colVal = 1; //Red
-		break;
-
-		case 50:
-			PS.colVal = 2; //Yelw
-		break;
-
-		case 51:
-			PS.colVal = 3; //Gren
-		break;
-
-		case 52:
-			PS.colVal = 4; //Blue
-		break;
-
-		case 53:
-			PS.colVal = 5; //Purp
-		break;
-
-		case 54:
-			PS.brightVal = 1; //White
-		break;
-
-		case 55:
-			PS.brightVal = 2; //Light
-		break;
-
-		case 56:
-			PS.brightVal = 3; //Normal
-		break;
-
-		case 57:
-			PS.brightVal = 4; //Dark
-		break;
-
-		
-	}
-
-	//PS.debug(PS.colVal);
-	//setColor(PS.colVal,PS.brightVal);
-	//Sets color
-
-
-	switch (PS.colVal) {
-		case (1): //RED
-			switch (PS.brightVal) {
-				case (1): //Black
-					PS.statusText("Color: RED Brightness: MIN");
-					PS.CURRCOLOR = 0x000000;
-				break;
-
-				case (2): //Dark
-					PS.statusText("Color: RED Brightness: LOW");
-					PS.CURRCOLOR = 0x7a0202;
-				break;
-
-				case (3): //Mid
-					PS.statusText("Color: RED Brightness: MED");
-					PS.CURRCOLOR = 0xe60000;
-				break;
-
-				case (4): //Light
-					PS.statusText("Color: RED Brightness: HIGH");
-					PS.CURRCOLOR = 0xff7d7d;
-				break;
-
-				case (5): //White
-					PS.statusText("Color: RED Brightness: MAX");
-					PS.CURRCOLOR = 0xFFFFFF;
-				break;
-			}
-
-		break;
-
-		case (2): //YELLOW
-			switch (PS.brightVal) {
-				case (1): //Black
-					PS.statusText("Color: YELLOW Brightness: MIN");
-					PS.CURRCOLOR = 0x000000;
-				break;
-
-				case (2): //Dark
-					PS.statusText("Color: YELLOW Brightness: LOW");
-					PS.CURRCOLOR = 0xccb806;
-				break;
-
-				case (3): //Mid
-					PS.statusText("Color: YELLOW Brightness: MED");
-					PS.CURRCOLOR = 0xffdc17;
-				break;
-
-				case (4): //Light
-					PS.statusText("Color: YELLOW Brightness: HIGH");
-					PS.CURRCOLOR = 0xfcefa2;
-				break;
-
-				case (5): //White
-					PS.statusText("Color: YELLOW Brightness: MAX");
-					PS.CURRCOLOR = 0xFFFFFF;
-				break;
-			}
-		break;
-
-		case (3): //GREEN
-			switch (PS.brightVal) {
-				case (1): //Black
-					PS.statusText("Color: GREEN Brightness: MIN");
-					PS.CURRCOLOR = 0x000000;
-				break;
-
-				case (2): //Dark
-					PS.statusText("Color: GREEN Brightness: LOW");
-					PS.CURRCOLOR = 0x1c8501;
-				break;
-
-				case (3): //Mid
-					PS.statusText("Color: GREEN Brightness: MED");
-					PS.CURRCOLOR = 0x2bcf02;
-				break;
-
-				case (4): //Light
-					PS.statusText("Color: GREEN Brightness: HIGH");
-					PS.CURRCOLOR = 0x98fa7f;
-				break;
-
-				case (5): //White
-					PS.statusText("Color: GREEN Brightness: MAX");
-					PS.CURRCOLOR = 0xFFFFFF;
-				break;
-			}
-		break;
-
-		case (4): //BLUE
-			switch (PS.brightVal) {
-				case (1): //Black
-					PS.statusText("Color: BLUE Brightness: MIN");
-					PS.CURRCOLOR = 0x000000;
-				break;
-
-				case (2): //Dark
-					PS.statusText("Color: BLUE Brightness: LOW");
-					PS.CURRCOLOR = 0x014c85;
-				break;
-
-				case (3): //Mid
-					PS.statusText("Color: BLUE Brightness: MED");
-					PS.CURRCOLOR = 0x0549e8;
-				break;
-
-				case (4): //Light
-					PS.statusText("Color: BLUE Brightness: HIGH");
-					PS.CURRCOLOR = 0x95b4fc;
-				break;
-
-				case (5): //White
-					PS.statusText("Color: BLUE Brightness: MAX");
-					PS.CURRCOLOR = 0xFFFFFF;
-				break;
-			}	
-		break;
-
-		case (5): //PURPLE
-			switch (PS.brightVal) {
-				case (1): //Black
-					PS.statusText("Color: PURPLE Brightness: MIN");
-					PS.CURRCOLOR = 0x000000;
-				break;
-
-				case (2): //Dark
-					PS.statusText("Color: PURPLE Brightness: LOW");
-					PS.CURRCOLOR = 0x4d009e;
-				break;
-
-				case (3): //Mid
-					PS.statusText("Color: PURPLE Brightness: MED");
-					PS.CURRCOLOR = 0x7907f2;
-				break;
-
-				case (4): //Light
-					PS.statusText("Color: PURPLE Brightness: HIGH");
-					PS.CURRCOLOR = 0xc795fc;
-				break;
-
-				case (5): //White
-					PS.statusText("Color: PURPLE Brightness: MAX");
-					PS.CURRCOLOR = 0xFFFFFF;
-				break;
-			}
-		break;
-	}
 };
 
 /*
@@ -421,11 +256,6 @@ This function doesn't have to do anything. Any value returned is ignored.
 */
 
 PS.keyUp = function( key, shift, ctrl, options ) {
-	// Uncomment the following code line to inspect first three parameters:
-
-	// PS.debug( "PS.keyUp(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
-
-	// Add code here for when a key is released.
 };
 
 /*
@@ -438,163 +268,183 @@ NOTE: Currently, only mouse wheel events are reported, and only when the mouse c
 */
 
 PS.input = function( sensors, options ) {
-	// Uncomment the following code lines to inspect first parameter:
-
-//	 var device = sensors.wheel; // check for scroll wheel
-//
-//	 if ( device ) {
-//	   PS.debug( "PS.input(): " + device + "\n" );
-//	 }
-
-	// Add code here for when an input event is detected.
 };
 
 //For some reason the setcolor function isnt working as intended so Imma just plug it directly in
 PS.setColor = function(c,b) {
-	PS.debug( toString(c).concat(toString(b)) );
+	//PS.debug("(" + c + ", " + b + ")\n");
 
 	switch (c) {
 		case (1): //RED
 			switch (b) {
 				case (1): //Black
-					PS.statusText("Color: RED Brightness: MIN");
+					PS.statusText("Color: BLACK");
 					PS.CURRCOLOR = 0x000000;
 				break;
 
 				case (2): //Dark
-					PS.statusText("Color: RED Brightness: LOW");
+					PS.statusText("Color: CRIMSON");
 					PS.CURRCOLOR = 0x7a0202;
 				break;
 
 				case (3): //Mid
-					PS.statusText("Color: RED Brightness: MED");
+					PS.statusText("Color: RED");
 					PS.CURRCOLOR = 0xe60000;
 				break;
 
 				case (4): //Light
-					PS.statusText("Color: RED Brightness: HIGH");
+					PS.statusText("Color: PINK");
 					PS.CURRCOLOR = 0xff7d7d;
 				break;
 
 				case (5): //White
-					PS.statusText("Color: RED Brightness: MAX");
+					PS.statusText("Color: WHITE");
 					PS.CURRCOLOR = 0xFFFFFF;
 				break;
 			}
 
 		break;
 
-		case (2): //YELLOW
+		case (2): //ORANGE
 			switch (b) {
 				case (1): //Black
-					PS.statusText("Color: YELLOW Brightness: MIN");
+					PS.statusText("Color: BLACK");
 					PS.CURRCOLOR = 0x000000;
 				break;
 
 				case (2): //Dark
-					PS.statusText("Color: YELLOW Brightness: LOW");
+					PS.statusText("Color: BROWN");
+					PS.CURRCOLOR = 0x855200;
+				break;
+
+				case (3): //Mid
+					PS.statusText("Color: ORANGE");
+					PS.CURRCOLOR = 0xfa9e0a;
+				break;
+
+				case (4): //Light
+					PS.statusText("Color: PEACH");
+					PS.CURRCOLOR = 0xffdda6;
+				break;
+
+				case (5): //White
+					PS.statusText("Color: WHITE");
+					PS.CURRCOLOR = 0xFFFFFF;
+				break;
+			}
+		break;
+
+		case (3): //YELLOW
+			switch (b) {
+				case (1): //Black
+					PS.statusText("Color: BLACK");
+					PS.CURRCOLOR = 0x000000;
+				break;
+
+				case (2): //Dark
+					PS.statusText("Color: DARK YELLOW");
 					PS.CURRCOLOR = 0xccb806;
 				break;
 
 				case (3): //Mid
-					PS.statusText("Color: YELLOW Brightness: MED");
+					PS.statusText("Color: YELLOW");
 					PS.CURRCOLOR = 0xffdc17;
 				break;
 
 				case (4): //Light
-					PS.statusText("Color: YELLOW Brightness: HIGH");
+					PS.statusText("Color: LIGHT YELLOW");
 					PS.CURRCOLOR = 0xfcefa2;
 				break;
 
 				case (5): //White
-					PS.statusText("Color: YELLOW Brightness: MAX");
+					PS.statusText("Color: WHITE");
 					PS.CURRCOLOR = 0xFFFFFF;
 				break;
 			}
 		break;
 
-		case (3): //GREEN
+		case (4): //GREEN
 			switch (b) {
 				case (1): //Black
-					PS.statusText("Color: GREEN Brightness: MIN");
+					PS.statusText("Color: BLACK");
 					PS.CURRCOLOR = 0x000000;
 				break;
 
 				case (2): //Dark
-					PS.statusText("Color: GREEN Brightness: LOW");
+					PS.statusText("Color: DARK GREEN");
 					PS.CURRCOLOR = 0x1c8501;
 				break;
 
 				case (3): //Mid
-					PS.statusText("Color: GREEN Brightness: MED");
+					PS.statusText("Color: GREEN");
 					PS.CURRCOLOR = 0x2bcf02;
 				break;
 
 				case (4): //Light
-					PS.statusText("Color: GREEN Brightness: HIGH");
+					PS.statusText("Color: LIGHT GREEN");
 					PS.CURRCOLOR = 0x98fa7f;
 				break;
 
 				case (5): //White
-					PS.statusText("Color: GREEN Brightness: MAX");
-					PS.CURRCOLOR = 0xFFFFFF;
-				break;
-			}
-		break;
-
-		case (4): //BLUE
-			switch (b) {
-				case (1): //Black
-					PS.statusText("Color: BLUE Brightness: MIN");
-					PS.CURRCOLOR = 0x000000;
-				break;
-
-				case (2): //Dark
-					PS.statusText("Color: BLUE Brightness: LOW");
-					PS.CURRCOLOR = 0x014c85;
-				break;
-
-				case (3): //Mid
-					PS.statusText("Color: BLUE Brightness: MED");
-					PS.CURRCOLOR = 0x0549e8;
-				break;
-
-				case (4): //Light
-					PS.statusText("Color: BLUE Brightness: HIGH");
-					PS.CURRCOLOR = 0x95b4fc;
-				break;
-
-				case (5): //White
-					PS.statusText("Color: BLUE Brightness: MAX");
+					PS.statusText("Color: WHITE");
 					PS.CURRCOLOR = 0xFFFFFF;
 				break;
 			}	
 		break;
 
-		case (5): //PURPLE
+		case (5): //BLUE
 			switch (b) {
 				case (1): //Black
-					PS.statusText("Color: PURPLE Brightness: MIN");
+					PS.statusText("Color: BLACK");
 					PS.CURRCOLOR = 0x000000;
 				break;
 
 				case (2): //Dark
-					PS.statusText("Color: PURPLE Brightness: LOW");
+					PS.statusText("Color: DARK BLUE");
+					PS.CURRCOLOR = 0x014c85;
+				break;
+
+				case (3): //Mid
+					PS.statusText("Color: BLUE");
+					PS.CURRCOLOR = 0x0549e8;
+				break;
+
+				case (4): //Light
+					PS.statusText("Color: SKY BLUE");
+					PS.CURRCOLOR = 0x95b4fc;
+				break;
+
+				case (5): //White
+					PS.statusText("Color: WHITE");
+					PS.CURRCOLOR = 0xFFFFFF;
+				break;
+			}
+		break;
+
+		case (6): //PURPLE
+			switch (b) {
+				case (1): //Black
+					PS.statusText("Color: BLACK");
+					PS.CURRCOLOR = 0x000000;
+				break;
+
+				case (2): //Dark
+					PS.statusText("Color: DARK VIOLET");
 					PS.CURRCOLOR = 0x4d009e;
 				break;
 
 				case (3): //Mid
-					PS.statusText("Color: PURPLE Brightness: MED");
+					PS.statusText("Color: PURPLE");
 					PS.CURRCOLOR = 0x7907f2;
 				break;
 
 				case (4): //Light
-					PS.statusText("Color: PURPLE Brightness: HIGH");
+					PS.statusText("Color: LAVENDER");
 					PS.CURRCOLOR = 0xc795fc;
 				break;
 
 				case (5): //White
-					PS.statusText("Color: PURPLE Brightness: MAX");
+					PS.statusText("Color: WHITE");
 					PS.CURRCOLOR = 0xFFFFFF;
 				break;
 			}
