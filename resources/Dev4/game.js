@@ -104,7 +104,7 @@ PS.Init = function (options)
 	}
 
 	//WIRE.deleteColor(0xf20202);
-	PS.StatusText("Connect the wires!");
+	PS.StatusText("Connect the wires, Fill the Screen!");
 
 	//0 by default, 1-6 for ROYGBV
 	
