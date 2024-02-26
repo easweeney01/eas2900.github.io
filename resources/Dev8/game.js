@@ -380,6 +380,7 @@ PS.drawCrab = function(x,y,stunless) {
 				PS.CrabStun = 10;
 				PS.Points ++;
 				PS.CrabInv = 5;
+				PS.AudioPlay("fx_bomb1");
 			}
 
 			if (grid[i][j] == 0) { //Transparent
